@@ -122,15 +122,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:animated_text_kit/animated_text_kit.dart';
+// import 'package:animated_text_kit/animated_text_kit.dart';
 
 
 
-List<Course> postFromJson(String str) =>
-    List<Course>.from(json.decode(str).map((x) => Course.fromMap(x)));
+List<Program> postFromJson(String str) =>
+    List<Program>.from(json.decode(str).map((x) => Program.fromMap(x)));
 
-class Course {
-  Course(
+class Program {
+  Program(
       {
         // required this.userId,
 
@@ -146,7 +146,7 @@ class Course {
   String courseYear;
   String courseLevel;
 
-  factory Course.fromMap(Map<String, dynamic> json) => Course(
+  factory Program.fromMap(Map<String, dynamic> json) => Program(
     // userId: json["userId"],
 
     courseCode: json["courseCode"],
@@ -156,28 +156,28 @@ class Course {
   );
 }
 
-Future<List<Course>> fetchPost() async {
+Future<List<Program>> fetchPost() async {
   final response = await http
       .get(Uri.parse('http://172.22.16.1:8085/course/getCourses'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
 
-    return parsed.map<Course>((json) => Course.fromMap(json)).toList();
+    return parsed.map<Program>((json) => Program.fromMap(json)).toList();
   } else {
     throw Exception('Failed to load album');
   }
 }
 
-class Courses extends StatefulWidget {
-  const Courses ({Key? key, required String courseCode, required String courseTitle, required String courseYear, required String courseLevel}) : super(key: key);
+class Course extends StatefulWidget {
+  const Course ({Key? key, required String courseCode, required String courseTitle, required String courseYear, required String courseLevel}) : super(key: key);
 
   @override
-  State<Courses> createState() => _CourseState();
+  State<Course> createState() => _CourseState();
 }
 
-class _CourseState extends State<Courses> {
-  late Future<List<Course>> futurePost;
+class _CourseState extends State<Course> {
+  late Future<List<Program>> futurePost;
   @override
   void initState() {
     super.initState();
@@ -190,7 +190,7 @@ class _CourseState extends State<Courses> {
       appBar: AppBar(
         title: const Text('List of Course'),
       ),
-      body: FutureBuilder<List<Course>>(
+      body: FutureBuilder<List<Program>>(
         future: futurePost,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -227,37 +227,42 @@ class _CourseState extends State<Courses> {
 
 
 
-                      TextButton(
-                        child: AnimatedTextKit(
-                          animatedTexts: [
-                            TypewriterAnimatedText('Click here for Course',
-                                textStyle: const TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 30,
-                                  fontStyle: FontStyle.italic,
-                                  fontFamily: 'Times New Roman',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                speed: const Duration(
-                                  milliseconds: 450,
-                                )),
-                          ],
-                          // onTap: (() {
-                          //   Navigator.pushNamed(
-                          //     context,
-                          //     MyRoutes.hosp24,
-                          //   );
-                          // }),
-                          isRepeatingAnimation: true,
-                          totalRepeatCount: 2,
-                        ),
-                        // onPressed: (() {
-                        //   Navigator.pushNamed(
-                        //     context,
-                        //     MyRoutes.hosp24,
-                        //   );
-                        // }),
-                      )
+                      // TextButton(
+                      //   onPressed: (){
+                      //       Navigator.push(context, Course)
+                      //   }
+                      //
+                      //
+                      //   child: AnimatedTextKit(
+                      //     animatedTexts: [
+                      //       TypewriterAnimatedText('Click here for Course',
+                      //           textStyle: const TextStyle(
+                      //             color: Colors.red,
+                      //             fontSize: 30,
+                      //             fontStyle: FontStyle.italic,
+                      //             fontFamily: 'Times New Roman',
+                      //             fontWeight: FontWeight.w500,
+                      //           ),
+                      //           speed: const Duration(
+                      //             milliseconds: 450,
+                      //           )),
+                      //     ],
+                      //     // onTap: (() {
+                      //     //   Navigator.pushNamed(
+                      //     //     context,
+                      //     //     MyRoutes.hosp24,
+                      //     //   );
+                      //     // }),
+                      //     isRepeatingAnimation: true,
+                      //     totalRepeatCount: 2,
+                      //   ),
+                      //   // onPressed: (() {
+                      //   //   Navigator.pushNamed(
+                      //   //     context,
+                      //   //     MyRoutes.hosp24,
+                      //   //   );
+                      //   // }),
+                      // )
                     ],
                   ),
                 ),

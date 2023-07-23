@@ -91,7 +91,7 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
               print('Timetable');
               Navigator.pop(context);
               setState(() {
-              currentPage=Timetable();
+              currentPage=Timetable(ttDate: 'ttDate', ttTime: 'ttTime', ttTitle: 'ttTitle', ttVenue: 'ttVenue',);
 
               });
               },
