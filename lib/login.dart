@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tms1/cindex.dart';
 import 'package:tms1/register.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -15,10 +16,21 @@ class _LoginState extends State<Login> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
-
-
   @override
-  State<Login> createState()=>_LoginState();
+  State<Login> createState() => _LoginState();
+  void _login() async {
+    var url = '';
+    var response = await http.post(Uri.parse(url),
+        // headers: ,
+        body: {
+          "email": username.text,
+          "pasword": password.text,
+        });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var data = jsonDecode(response.body);
+      return data;
+    }
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,6 +165,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-
-
-
