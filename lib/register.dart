@@ -42,7 +42,7 @@ class _RegisterState extends State<Register> {
 
   @override
   void initState() {
-    _role = TextEditingController(text: 'student');
+    _role = TextEditingController(text: 'ROLE_STUDENT');
     super.initState();
   }
 
@@ -73,8 +73,9 @@ class _RegisterState extends State<Register> {
 
     };
 
-    var url = Uri.parse('http://172.22.16.1:8085/trainee/registerTrainee');
-    var response = await http.post(url,
+    var url = Uri.parse('http://192.168.1.121:8085/trainee/registerTrainee');
+    var response = await http.post(
+        Uri.parse(url as String),
         headers: {"Content-type": "application/json"},
         body: jsonEncode(myuserdata));
 
@@ -82,7 +83,7 @@ class _RegisterState extends State<Register> {
       if (response.body != "null") {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: const Text("Registered Successful")));
-        // Navigator.pushNamed(context, MyRoutes.login);
+         Navigator.pushNamed(context, '/Login');
       } else {
         print("login fail try again");
       }

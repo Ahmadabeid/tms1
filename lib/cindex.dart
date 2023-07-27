@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tms1/Course.dart';
 import 'package:tms1/Home.dart';
-import 'package:tms1/Resource.dart';
+// import 'package:tms1/Resource.dart';
 import 'package:tms1/Timetable.dart';
-import 'package:tms1/register.dart';
+// import 'package:tms1/register.dart';
 
 class Cindex extends StatefulWidget {
+  dynamic name;
+  dynamic id;
+   Cindex  ({Key ? key, required this.name, required this.id }):super(key:key);
+
   @override
   _CindexState createState() => _CindexState();
 }
@@ -40,7 +44,7 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
           children: [
             UserAccountsDrawerHeader(
               accountName: Text('Provider Account'),
-              accountEmail: Text('Systemprovider@gmail.com'),
+              accountEmail: Text(widget.name),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/m.png'),
               ),

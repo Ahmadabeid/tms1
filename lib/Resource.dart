@@ -5,14 +5,14 @@ import 'dart:async';
 import 'package:flutter_downloader/flutter_downloader.dart';
 
 
-class Register  extends StatefulWidget {
-  const Register ({super.key});
+class Resource  extends StatefulWidget {
+  const Resource ({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<Resource> createState() => _ResourceState();
 }
 
-class _RegisterState extends State <Register> {
+class _ResourceState extends State <Resource> {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();

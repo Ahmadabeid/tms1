@@ -13,22 +13,35 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  Map userData ={};
+  final _formkey = GlobalKey<FormState>();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
   @override
   State<Login> createState() => _LoginState();
   void _login() async {
-    var url = '';
+    var url = 'http://192.168.1.121:8085/auth/login';
+
     var response = await http.post(Uri.parse(url),
-        // headers: ,
-        body: {
-          "email": username.text,
-          "pasword": password.text,
-        });
+      headers: {
+        'Content-Type': 'application/json', // Example header
+      },
+        body: jsonEncode({
+          "username": username.text,
+          "password": password.text,
+        }),
+        );
     if (response.statusCode == 200 || response.statusCode == 201) {
       var data = jsonDecode(response.body);
+      var id =data['userID'];
+      var name = data['username'];
+      Navigator.push(context, MaterialPageRoute(builder: (_) =>  Cindex(name:name, id:id)));
+
       return data;
+    }
+    else{
+      print("Error: ${response.statusCode}");
     }
   }
 
@@ -145,16 +158,25 @@ class _LoginState extends State<Login> {
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: TextButton(
-                          child: Text("login"),
+                          child: Text("login"
+
+                          ),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Cindex()));
+                            _login();
+                            // if (_formkey.currentState!.validate()){
+                            //   print('form submitted');
+                            // }
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => Cindex()));
                           },
+
+
+                        ),
                         ),
                       ),
-                    ),
+
                   ],
                 ),
               ),
