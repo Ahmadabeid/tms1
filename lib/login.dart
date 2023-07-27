@@ -13,7 +13,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  Map userData ={};
+  Map userData = {};
   final _formkey = GlobalKey<FormState>();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -23,24 +23,25 @@ class _LoginState extends State<Login> {
   void _login() async {
     var url = 'http://192.168.1.121:8085/auth/login';
 
-    var response = await http.post(Uri.parse(url),
+    var response = await http.post(
+      Uri.parse(url),
       headers: {
         'Content-Type': 'application/json', // Example header
       },
-        body: jsonEncode({
-          "username": username.text,
-          "password": password.text,
-        }),
-        );
+      body: jsonEncode({
+        "username": username.text,
+        "password": password.text,
+      }),
+    );
     if (response.statusCode == 200 || response.statusCode == 201) {
       var data = jsonDecode(response.body);
-      var id =data['userID'];
+      var id = data['userID'];
       var name = data['username'];
-      Navigator.push(context, MaterialPageRoute(builder: (_) =>  Cindex(name:name, id:id)));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => Cindex(name: name, id: id)));
 
       return data;
-    }
-    else{
+    } else {
       print("Error: ${response.statusCode}");
     }
   }
@@ -158,9 +159,7 @@ class _LoginState extends State<Login> {
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: TextButton(
-                          child: Text("login"
-
-                          ),
+                          child: Text("login"),
                           onPressed: () {
                             _login();
                             // if (_formkey.currentState!.validate()){
@@ -171,12 +170,9 @@ class _LoginState extends State<Login> {
                             //     MaterialPageRoute(
                             //         builder: (context) => Cindex()));
                           },
-
-
-                        ),
                         ),
                       ),
-
+                    ),
                   ],
                 ),
               ),

@@ -8,7 +8,7 @@ import 'package:tms1/Timetable.dart';
 class Cindex extends StatefulWidget {
   dynamic name;
   dynamic id;
-   Cindex  ({Key ? key, required this.name, required this.id }):super(key:key);
+  Cindex({Key? key, required this.name, required this.id}) : super(key: key);
 
   @override
   _CindexState createState() => _CindexState();
@@ -19,7 +19,7 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
   var currentPage;
   @override
   void initState() {
-    currentPage=Padding(
+    currentPage = Padding(
       padding: const EdgeInsets.only(top: 15.0, left: 85.0),
       child: Text(
         'Trainee Dashboard  ',
@@ -29,7 +29,6 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
     tabController = TabController(vsync: this, length: 4);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +36,6 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
         title: Text('User Panel'),
       ),
       body: currentPage,
-
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -49,7 +47,6 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
                 backgroundImage: AssetImage('assets/m.png'),
               ),
             ),
-
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Home'),
@@ -57,52 +54,48 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
                 print('Home');
                 Navigator.pop(context);
                 setState(() {
-                  currentPage=HomePage();
+                  currentPage = HomePage();
                 });
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
-
               },
             ),
-
             ListTile(
               leading: Icon(Icons.subject),
               title: Text('Course'),
               onTap: () {
-                print('Course');
-                Navigator.pop(context);
-                setState(() {
-                  currentPage= Course(courseCode: 'courseCode', courseTitle: 'courseTitle', courseYear: 'courseYear', courseLevel: 'courseLevel');
-                });
+                // print('Course');
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => Course(
+                            courseCode: 'courseCode',
+                            courseTitle: 'courseTitle',
+                            courseYear: 'courseYear',
+                            courseLevel: 'courseLevel')));
+                // Navigator.pop(context);
+                // setState(() {
+                //   currentPage =
+                // });
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
-
               },
             ),
-            // ListTile(
-            //   leading: Icon(Icons.book),
-            //   title: Text('Resource'),
-            //   onTap: () {
-            //     print('Resource');
-            //     Navigator.pop(context);
-            //     setState(() {
-            //       currentPage = Resource();
-            //     });
-            //   },
-            // ),
             ListTile(
               leading: Icon(Icons.calendar_today),
               title: Text('Timetable'),
-              onTap:() {
-              print('Timetable');
-              Navigator.pop(context);
-              setState(() {
-              currentPage=Timetable(ttDate: 'ttDate', ttTime: 'ttTime', ttTitle: 'ttTitle', ttVenue: 'ttVenue',);
-
-              });
+              onTap: () {
+                print('Timetable');
+                Navigator.pop(context);
+                setState(() {
+                  currentPage = Timetable(
+                    ttDate: 'ttDate',
+                    ttTime: 'ttTime',
+                    ttTitle: 'ttTitle',
+                    ttVenue: 'ttVenue',
+                  );
+                });
               },
-              ),
-
-                ListTile(
-
+            ),
+            ListTile(
               leading: Icon(Icons.description),
               title: Text('Forum'),
               // onTap: () {
@@ -133,11 +126,6 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
           ],
         ),
       ),
-
     );
   }
-
-
-
-
 }
