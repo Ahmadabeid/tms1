@@ -68,6 +68,8 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
                     context,
                     MaterialPageRoute(
                         builder: (_) => Course(
+                            name: widget.name,
+                            id: widget.id,
                             courseCode: 'courseCode',
                             courseTitle: 'courseTitle',
                             courseYear: 'courseYear',

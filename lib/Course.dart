@@ -124,20 +124,18 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 // import 'package:animated_text_kit/animated_text_kit.dart';
 
-
-
 List<Program> postFromJson(String str) =>
     List<Program>.from(json.decode(str).map((x) => Program.fromMap(x)));
 
 class Program {
   Program(
       {
-        // required this.userId,
+      // required this.userId,
 
-        required this.courseCode,
-        required this.courseTitle,
-        required this.courseYear,
-        required this.courseLevel});
+      required this.courseCode,
+      required this.courseTitle,
+      required this.courseYear,
+      required this.courseLevel});
 
   // int userId;
 
@@ -147,18 +145,18 @@ class Program {
   String courseLevel;
 
   factory Program.fromMap(Map<String, dynamic> json) => Program(
-    // userId: json["userId"],
+        // userId: json["userId"],
 
-    courseCode: json["courseCode"],
-    courseTitle: json["courseTitle"],
-    courseYear: json["courseYear"],
-    courseLevel: json["courseLevel"],
-  );
+        courseCode: json["courseCode"],
+        courseTitle: json["courseTitle"],
+        courseYear: json["courseYear"],
+        courseLevel: json["courseLevel"],
+      );
 }
 
 Future<List<Program>> fetchPost() async {
-  final response = await http
-      .get(Uri.parse('http://192.168.1.121:8085/course/getCourses'));
+  final response =
+      await http.get(Uri.parse('http://192.168.1.121:8085/course/getCourses'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
@@ -170,7 +168,15 @@ Future<List<Program>> fetchPost() async {
 }
 
 class Course extends StatefulWidget {
-  const Course ({Key? key, required String courseCode, required String courseTitle, required String courseYear, required String courseLevel}) : super(key: key);
+  const Course(
+      {Key? key,
+      required String name,
+      required String id,
+      required String courseCode,
+      required String courseTitle,
+      required String courseYear,
+      required String courseLevel})
+      : super(key: key);
 
   @override
   State<Course> createState() => _CourseState();
@@ -188,7 +194,26 @@ class _CourseState extends State<Course> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('List of Course'),
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        title: Container(
+          child: Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+                child: Icon(Icons.arrow_back_ios),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Text('Course List'),
+            ],
+          ),
+        ),
       ),
       body: FutureBuilder<List<Program>>(
         future: futurePost,
@@ -224,8 +249,6 @@ class _CourseState extends State<Course> {
                       Text("COURSE:${snapshot.data![index].courseYear}"),
                       SizedBox(height: 10),
                       Text("COURSE:${snapshot.data![index].courseLevel}"),
-
-
 
                       // TextButton(
                       //   onPressed: (){
