@@ -1,5 +1,3 @@
-// ignore_for_file: sort_child_properties_last, unused_local_variable, unnecessary_new, unused_element, depend_on_referenced_packages, use_build_context_synchronously, avoid_print, prefer_const_constructors, non_constant_identifier_names
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -69,13 +67,10 @@ class _RegisterState extends State<Register> {
       "disability": _disability.text,
       "disabilityTitle": _disabilityTitle.text,
       "educationalStatus": _educationalStatus.text,
-
-
     };
 
     var url = Uri.parse('http://192.168.1.121:8085/trainee/registerTrainee');
-    var response = await http.post(
-        Uri.parse(url as String),
+    var response = await http.post(Uri.parse(url as String),
         headers: {"Content-type": "application/json"},
         body: jsonEncode(myuserdata));
 
@@ -83,13 +78,13 @@ class _RegisterState extends State<Register> {
       if (response.body != "null") {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: const Text("Registered Successful")));
-         Navigator.pushNamed(context, '/Login');
+        Navigator.pushNamed(context, '/Login');
       } else {
         print("login fail try again");
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: const Text("confirm your data.")));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: const Text("confirm your data.")));
     }
   }
 
@@ -270,8 +265,6 @@ class _RegisterState extends State<Register> {
                       const SizedBox(
                         height: 10,
                         width: 10,
-
-
                       ),
                       TextFormField(
                         controller: _placeOfBirth,
@@ -517,7 +510,6 @@ class _RegisterState extends State<Register> {
                         //   labelText: 'Patient',
                       ),
 
-
                       // const SizedBox(
                       //   height: 10,
                       //   width: 10,
@@ -534,7 +526,6 @@ class _RegisterState extends State<Register> {
                         //   icon: Icon(Icons.wheelchair_pickup),
                         //   labelText: 'Patient',
                       ),
-
 
                       // const SizedBox(
                       //   height: 10,
@@ -619,15 +610,15 @@ class _RegisterState extends State<Register> {
 
   DropdownButtonFormField2(
       {required InputDecoration decoration,
-        required bool isExpanded,
-        required Text hint,
-        required Icon icon,
-        required int iconSize,
-        required int buttonHeight,
-        required EdgeInsets buttonPadding,
-        required BoxDecoration dropdownDecoration,
-        required List<DropdownMenuItem<String>> items,
-        required String? Function(dynamic value) validator,
-        required Null Function(dynamic value) onChanged,
-        required Null Function(dynamic value) onSaved}) {}
+      required bool isExpanded,
+      required Text hint,
+      required Icon icon,
+      required int iconSize,
+      required int buttonHeight,
+      required EdgeInsets buttonPadding,
+      required BoxDecoration dropdownDecoration,
+      required List<DropdownMenuItem<String>> items,
+      required String? Function(dynamic value) validator,
+      required Null Function(dynamic value) onChanged,
+      required Null Function(dynamic value) onSaved}) {}
 }
