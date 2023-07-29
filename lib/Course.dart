@@ -156,7 +156,7 @@ class Program {
 
 Future<List<Program>> fetchPost() async {
   final response =
-      await http.get(Uri.parse('http://192.168.1.121:8085/course/getCourses'));
+      await http.get(Uri.parse('http://192.168.88.73:8085/course/getCourses'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
@@ -249,43 +249,6 @@ class _CourseState extends State<Course> {
                       Text("COURSE:${snapshot.data![index].courseYear}"),
                       SizedBox(height: 10),
                       Text("COURSE:${snapshot.data![index].courseLevel}"),
-
-                      // TextButton(
-                      //   onPressed: (){
-                      //       Navigator.push(context, Course)
-                      //   }
-                      //
-                      //
-                      //   child: AnimatedTextKit(
-                      //     animatedTexts: [
-                      //       TypewriterAnimatedText('Click here for Course',
-                      //           textStyle: const TextStyle(
-                      //             color: Colors.red,
-                      //             fontSize: 30,
-                      //             fontStyle: FontStyle.italic,
-                      //             fontFamily: 'Times New Roman',
-                      //             fontWeight: FontWeight.w500,
-                      //           ),
-                      //           speed: const Duration(
-                      //             milliseconds: 450,
-                      //           )),
-                      //     ],
-                      //     // onTap: (() {
-                      //     //   Navigator.pushNamed(
-                      //     //     context,
-                      //     //     MyRoutes.hosp24,
-                      //     //   );
-                      //     // }),
-                      //     isRepeatingAnimation: true,
-                      //     totalRepeatCount: 2,
-                      //   ),
-                      //   // onPressed: (() {
-                      //   //   Navigator.pushNamed(
-                      //   //     context,
-                      //   //     MyRoutes.hosp24,
-                      //   //   );
-                      //   // }),
-                      // )
                     ],
                   ),
                 ),

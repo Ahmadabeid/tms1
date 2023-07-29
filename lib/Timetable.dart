@@ -157,7 +157,7 @@ class StudySession {
 
 Future<List<StudySession>> fetchPost() async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.121:8085/timetable/getTimetables'));
+      .get(Uri.parse('http://192.168.88.73:8085/timetable/getTimetables'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
