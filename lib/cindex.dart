@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tms1/Course.dart';
 import 'package:tms1/Home.dart';
+import 'package:tms1/Resource.dart';
+import 'package:tms1/Service/Document.dart';
 // import 'package:tms1/Resource.dart';
 import 'package:tms1/Timetable.dart';
 // import 'package:tms1/register.dart';
@@ -8,7 +10,8 @@ import 'package:tms1/Timetable.dart';
 class Cindex extends StatefulWidget {
   dynamic name;
   dynamic id;
-  Cindex({Key? key, required this.name, required this.id}) : super(key: key);
+  dynamic password;
+  Cindex({Key? key, required this.name, required this.id, required this.password}) : super(key: key);
 
   @override
   _CindexState createState() => _CindexState();
@@ -17,6 +20,8 @@ class Cindex extends StatefulWidget {
 class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
   late TabController tabController;
   var currentPage;
+
+
   @override
   void initState() {
     currentPage = Padding(
@@ -59,6 +64,7 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
               },
             ),
+            
             ListTile(
               leading: Icon(Icons.subject),
               title: Text('Course'),
@@ -68,8 +74,8 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
                     context,
                     MaterialPageRoute(
                         builder: (_) => Course(
-                            name: widget.name,
-                            id: widget.id,
+                            // name: widget.name,
+                            // id: widget.id,
                             courseCode: 'courseCode',
                             courseTitle: 'courseTitle',
                             courseYear: 'courseYear',
@@ -114,9 +120,16 @@ class _CindexState extends State<Cindex> with SingleTickerProviderStateMixin {
             ListTile(
               leading: Icon(Icons.book),
               title: Text('Document'),
-              // onTap: () {
-              //               Navigator.push(context, MaterialPageRoute(builder: (context) => ));
-              //             },
+              onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) =>(Document()) ));
+                          },
+            ),
+            ListTile(
+              leading: Icon(Icons.book),
+              title: Text('Resource'),
+              onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) =>Resource(username:widget.name,password:widget.password ) ));
+                          },
             ),
             ListTile(
               leading: Icon(Icons.exit_to_app),

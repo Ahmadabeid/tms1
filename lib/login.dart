@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
   @override
   State<Login> createState() => _LoginState();
   void _login() async {
-    var url = 'http://192.168.1.121:8085/auth/login';
+    var url = 'http://192.168.121.73:8085/auth/login';
 
     var response = await http.post(
       Uri.parse(url),
@@ -37,8 +37,9 @@ class _LoginState extends State<Login> {
       var data = jsonDecode(response.body);
       var id = data['userID'];
       var name = data['username'];
+      var password = data['password'];
       Navigator.push(context,
-          MaterialPageRoute(builder: (_) => Cindex(name: name, id: id)));
+          MaterialPageRoute(builder: (_) => Cindex(name: name, id: id, password:password),),);
 
       return data;
     } else {
@@ -87,7 +88,7 @@ class _LoginState extends State<Login> {
                     TextFormField(
                       controller: username,
                       decoration: const InputDecoration(
-                          labelText: 'NAME',
+                          labelText: 'USERNAME',
                           prefixIcon: Icon(Icons.person),
                           labelStyle: TextStyle(
                               fontFamily: 'Montserrat',
@@ -139,26 +140,6 @@ class _LoginState extends State<Login> {
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: TextButton(
-                          child: Text("Register"),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Register()));
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: Colors.white,
-                      ),
-                      width: 500.0,
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: TextButton(
                           child: Text("login"),
                           onPressed: () {
                             _login();
@@ -173,6 +154,28 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 20.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.white,
+                      ),
+                      width: 500.0,
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: TextButton(
+                          child: Text("Register"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Register()));
+                          },
+                        ),
+                      ),
+                    ),
+
+
                   ],
                 ),
               ),

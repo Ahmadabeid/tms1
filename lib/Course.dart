@@ -116,72 +116,53 @@
 //     );
 //   }
 // }
-
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, avoid_print, camel_case_types, unnecessary_string_interpolations, avoid_unnecessary_containers, sort_child_properties_last
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 // import 'package:animated_text_kit/animated_text_kit.dart';
-
 List<Program> postFromJson(String str) =>
     List<Program>.from(json.decode(str).map((x) => Program.fromMap(x)));
-
 class Program {
   Program(
       {
-      // required this.userId,
-
-      required this.courseCode,
-      required this.courseTitle,
-      required this.courseYear,
-      required this.courseLevel});
-
+        // required this.userId,
+        required this.courseCode,
+        required this.courseTitle,
+        required this.courseYear,
+        required this.courseLevel});
   // int userId;
-
   String courseCode;
   String courseTitle;
   String courseYear;
   String courseLevel;
-
   factory Program.fromMap(Map<String, dynamic> json) => Program(
-        // userId: json["userId"],
-
-        courseCode: json["courseCode"],
-        courseTitle: json["courseTitle"],
-        courseYear: json["courseYear"],
-        courseLevel: json["courseLevel"],
-      );
+    // userId: json["userId"],
+    courseCode: json["courseCode"],
+    courseTitle: json["courseTitle"],
+    courseYear: json["courseYear"],
+    courseLevel: json["courseLevel"],
+  );
 }
 
 Future<List<Program>> fetchPost() async {
-  final response =
-      await http.get(Uri.parse('http://192.168.88.73:8085/course/getCourses'));
+  final response = await http
+      .get(Uri.parse('http://192.168.88.73:8085/course/getCourses'));
+
 
   if (response.statusCode == 200) {
-    final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
-
-    return parsed.map<Program>((json) => Program.fromMap(json)).toList();
+  final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+  return parsed.map<Program>((json) => Program.fromMap(json)).toList();
   } else {
-    throw Exception('Failed to load album');
+  throw Exception('Failed to load album');
   }
 }
-
 class Course extends StatefulWidget {
-  const Course(
-      {Key? key,
-      required String name,
-      required String id,
-      required String courseCode,
-      required String courseTitle,
-      required String courseYear,
-      required String courseLevel})
-      : super(key: key);
-
+  const Course ({Key? key, required String courseCode, required String courseTitle, required String courseYear, required String courseLevel}) : super(key: key);
   @override
   State<Course> createState() => _CourseState();
 }
-
 class _CourseState extends State<Course> {
   late Future<List<Program>> futurePost;
   @override
@@ -189,31 +170,11 @@ class _CourseState extends State<Course> {
     super.initState();
     futurePost = fetchPost();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title: Container(
-          child: Row(
-            children: [
-              Container(
-                padding: EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-                child: Icon(Icons.arrow_back_ios),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Text('Course List'),
-            ],
-          ),
-        ),
+        title: const Text('List of Course'),
       ),
       body: FutureBuilder<List<Program>>(
         future: futurePost,
@@ -249,6 +210,42 @@ class _CourseState extends State<Course> {
                       Text("COURSE:${snapshot.data![index].courseYear}"),
                       SizedBox(height: 10),
                       Text("COURSE:${snapshot.data![index].courseLevel}"),
+                      // TextButton(
+                      //   onPressed: (){
+                      //       Navigator.push(context, Course)
+                      //   }
+                      //
+                      //
+                      //   child: AnimatedTextKit(
+                      //     animatedTexts: [
+                      //       TypewriterAnimatedText('Click here for Course',
+                      //           textStyle: const TextStyle(
+                      //             color: Colors.red,
+                      //             fontSize: 30,
+                      //             fontStyle: FontStyle.italic,
+                      //             fontFamily: 'Times New Roman',
+                      //             fontWeight: FontWeight.w500,
+                      //           ),
+                      //           speed: const Duration(
+                      //             milliseconds: 450,
+                      //           )),
+                      //     ],
+                      //     // onTap: (() {
+                      //     //   Navigator.pushNamed(
+                      //     //     context,
+                      //     //     MyRoutes.hosp24,
+                      //     //   );
+                      //     // }),
+                      //     isRepeatingAnimation: true,
+                      //     totalRepeatCount: 2,
+                      //   ),
+                      //   // onPressed: (() {
+                      //   //   Navigator.pushNamed(
+                      //   //     context,
+                      //   //     MyRoutes.hosp24,
+                      //   //   );
+                      //   // }),
+                      // )
                     ],
                   ),
                 ),

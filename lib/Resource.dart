@@ -1,43 +1,30 @@
-import 'dart:html';
-
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter_downloader/flutter_downloader.dart';
 
+class Resource extends StatefulWidget {
+  dynamic username;
+  dynamic password;
+  Resource({Key? key, required this.username, required this.password}) : super(key: key);
 
-List<Document> postFromJson(String str)=>
-    List<Document>.from(json.decode(str).map((x)=> Document.fromMap(x)));
 
-class Document {
-  Document(
-      {
-        required this.resType,
-        required this.resName,
-        required this.resContent,
-        required this.resFile,
-        required this.resDate });
-
-  String resType;
-  String resName;
-  String resContent;
-  String resFile;
-  String resDate;
-
-  factory Document.fromMap(Map<String, dynamic> json) => Document(
-    resType: json["resType"],
-    resName: json["resName"],
-    resContent: json["resContent"],
-    resFile: json["resFile"],
-    resDate: json["resDate"],
-  );
+  @override
+  State<Resource> createState() => _ResourceState();
 }
 
-
+class _ResourceState extends State<Resource> {
+  // late Future<List<Document>> futurePost;
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   futurePost = download();
+  // }
   dynamic resId;
   void  download() async {
-    var url = 'htpp//192.168.88.73:8000/resource/addResource/${resId}';
+    var url = 'htpp//192.168.1.227:8085/resource/addResource/${resId}';
     var response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
     });
@@ -49,29 +36,29 @@ class Document {
     }
   }
 
+  Future fetch_resource() async {
+    var urls = 'http://192.168.1.227:8085/resource/getResource';
+    var username = widget.username;
+    var password = widget.password;
 
+    // Combine username and password with a colon and encode them in Base64
+    var basicAuth = 'Basic QWhtYWQ6MTIz' + base64Encode(utf8.encode('$username:$password'));
 
-class Resource extends StatefulWidget {
-  const Resource({
-    Key ? key,
-    required String resType,
-    required String resName,
-    required String resContent,
-    required String resFile,
-    required String resDate });
+    var res = await http.get(
+      Uri.parse(urls),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': basicAuth,
+      },
+    );
 
-  // : super(key: key);
-
-  @override
-  State<Resource> createState() => _ResourceState();
-}
-
-class _ResourceState extends State<Resource> {
-  late Future<List<Document>> futurePost;
-  @override
-  void initState(){
-    super.initState();
-    futurePost = download();
+    if (res.statusCode == 200) {
+      var datas = jsonDecode(res.body);
+      print(datas);
+      return datas;
+    } else {
+      print('${res.statusCode}');
+    }
   }
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,13 +79,13 @@ class _ResourceState extends State<Resource> {
               SizedBox(
                 width: 20,
               ),
-              Text('Course List'),
+              Text('Resource'),
             ],
           ),
         ),
       ),
-      body: FutureBuilder<List<Document>>(
-        future: futurePost,
+      body: FutureBuilder(
+        future: fetch_resource(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -112,28 +99,55 @@ class _ResourceState extends State<Resource> {
                         color: Color(0xff97FFFF),
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child:Row(
                         children: [
-                          Text(
-                            // iwe sawa na databasename mfano coursename attribute
-                            "${snapshot.data![index].resType}",
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            child:Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  // iwe sawa na databasename mfano coursename attribute
+                                  "${snapshot.data![index].resType}",
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text("${snapshot.data![index].resName}"),
+                                SizedBox(height: 10),
+                                Text("${snapshot.data![index].resContent}"),
+
+                                SizedBox(height: 10),
+                                Text("RESOURCE:${snapshot.data![index].resDate}"),
+                              ],
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Text("RESOURCE:${snapshot.data![index].resName}"),
-                          SizedBox(height: 10),
-                          Text("RESOURCE:${snapshot.data![index].resContent}"),
-                          SizedBox(height: 10),
-                          Text("RESOURCE:${snapshot.data![index].resFile}"),
-                          SizedBox(height: 10),
-                          Text("RESOURCE:${snapshot.data![index].resDate}"),
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+                                resId =snapshot.data![index].resId;
+                              });
+                            },
+                            child:   Container(
+                              width:20,
+                              height: 20,
+                              decoration:BoxDecoration(
+                                  color:Colors.grey,
+                                  borderRadius: BorderRadius.circular(50)
+
+                              ),
+                              child:Icon(Icons.download),
+                            ),
+
+                          ),
+
                         ],
-                      ),
+                      )
+
+
+
                     ),
                   ),
             );

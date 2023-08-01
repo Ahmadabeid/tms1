@@ -69,7 +69,7 @@ class _RegisterState extends State<Register> {
       "educationalStatus": _educationalStatus.text,
     };
 
-    var url = Uri.parse('http://192.168.1.121:8085/trainee/registerTrainee');
+    var url = Uri.parse('http://192.168.1.227:8085/trainee/registerTrainee');
     var response = await http.post(Uri.parse(url as String),
         headers: {"Content-type": "application/json"},
         body: jsonEncode(myuserdata));
